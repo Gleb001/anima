@@ -1,11 +1,11 @@
 // imports ================================================== //
 // types ---------------------------------------------------- //
-import type { Properties } from "../shared/types/index";
+import type { Properties } from "../shared/types/index.d.ts";
 // helpers -------------------------------------------------- //
-import { Animation } from "../animation/index.js";
-import { timeout } from "../animationJS/helpers/timeout.js";
-import { createFileAnimationCSS } from "./helpers/createFileAnimationCSS.js";
-import { parseTimingFunction } from "./helpers/parseTimingFunction.js";
+import { Animation } from "../animation/index";
+import { timeout } from "../animationJS/helpers/timeout";
+import { createFileAnimationCSS } from "./helpers/createFileAnimationCSS";
+import { parseTimingFunction } from "./helpers/parseTimingFunction";
 
 // main ===================================================== //
 class AnimationCSS extends Animation<string> {
@@ -47,29 +47,34 @@ class AnimationCSS extends Animation<string> {
         return await this.end();
     }
     public async end() {
+
+        let { elems, props } = this._settings;
+
         if (!this._isReversed) {
-            this._settings.elems.forEach(elem => {
-                for (let name_prop in this._settings.props) {
-                    let prop = this._settings.props[name_prop]!;
-                    elem.style[name_prop] = prop.pattern.replace("?", String(prop.values[1]));
+            for (let elem of elems) {
+                for (let name_prop in props) {
+                    let { number_couples, pattern } = props[name_prop]!;
+                    for (let [start, end] of number_couples) {
+                        elem.style[name_prop] = pattern.replace("?", end.toString());
+                    }
                     elem.style.animation = "";
                 }
-            });
+            }
         } else {
-            this._settings.elems.forEach(elem => {
+            for (let elem of elems) {
                 elem.style.animation = "";
-            });
+            }
         }
 
+        await timeout(25); // wait set props for elems
         this._css_file.remove();
 
-        await timeout(15); // i don't understand why it work before timeout
         return this._settings.elems;
     }
 
     // private ---------------------------------------------- //
-    private _css_file   : HTMLStyleElement
-    private _isReversed : boolean = false;
+    private _css_file: HTMLStyleElement
+    private _isReversed: boolean = false;
 
 };
 

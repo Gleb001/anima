@@ -1,5 +1,5 @@
 // imports ================================================== //
-import type { TimingFunctionList } from "./types/index";
+import type { TimingFunctionList } from "./types/index.d.ts";
 
 // main ===================================================== //
 const TIMING_FUNCTIONS: TimingFunctionList = {

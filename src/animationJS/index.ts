@@ -1,21 +1,23 @@
 // import =================================================== //
 // types ---------------------------------------------------- //
-import type { TimingFunction } from "./types/index";
-import type { ValidProperty } from "../shared/types/index";
-import type { NamesTimingFunction } from "./constants/timingFunctions/types/index";
+import type { TimingFunction } from "./types/index.d.ts";
+import type { NamesTimingFunction } from "./constants/timingFunctions/types/index.d.ts";
 // constants ------------------------------------------------ //
-import { TIMING_FUNCTIONS } from "./constants/timingFunctions/index.js";
+import { TIMING_FUNCTIONS } from "./constants/timingFunctions/index";
 // helpers -------------------------------------------------- //
-import { timeout } from "./helpers/timeout.js";
-import { Animation } from "../animation/index.js";
+import { timeout } from "./helpers/timeout";
+import { replace } from "./helpers/replace";
+// parent class ---------------------------------------------
+import { Animation } from "../animation/index";
 
 // main ===================================================== //
 class AnimationJS extends Animation<TimingFunction> {
 
     // public ----------------------------------------------- //
+    // @ts-ignore: incapsultaion this method object
     public async start(
         timing_function: TimingFunction | NamesTimingFunction,
-        duration?: number,
+        duration: number,
         delay?: number
     ) {
         if (typeof timing_function === "string") {
@@ -56,35 +58,43 @@ class AnimationJS extends Animation<TimingFunction> {
                         window.requestAnimationFrame(animate);
                     } else {
                         resolve(null);
-                    };
+                    }
 
                 }
             );
         });
     }
     private _changeEachPropertyInOrder(time_fraction: number) {
-        for (let name_prop in this._settings.props) {
-            let prop = this._settings.props[name_prop]!;                        // get prop
-            let new_value = this._calculate(time_fraction, prop);               // get new value for the prop
-            let value_prop = prop.pattern.replace("?", new_value.toString());   // get valid new value for the css
-            this._draw(name_prop, value_prop);                                  // set new value the prop
+        let { props } = this._settings;
+        for (let name_prop in props) {
+            let { number_couples, pattern } = props[name_prop]!;
+            let data = this._getData(number_couples, time_fraction);
+            let value_prop = replace(pattern, "?", data);
+            this._draw(name_prop, value_prop);
         }
     }
-    private _calculate(time_fraction: number, prop: ValidProperty) {
-        let [prev_value, next_value] = prop.values;                     // get prev and next values property
-        let added_value = next_value - prev_value;                      // get added value
-        let percent = this._settings.timing_function!(time_fraction);   // get percent of the added distance
-        let part_added_number = percent * added_value;                  // get part of the added value
-        return prev_value + part_added_number;                          // get new value property
+    private _calculate(time_fraction: number, start: number, end: number) {
+        let added_value = end - start;
+        let percent = this._settings.timing_function!(time_fraction);
+        let part_added_number = percent * added_value;
+        return start + part_added_number;
     }
     private _draw(name_prop: string, new_value: string) {
         this._settings.elems.forEach(elem => {
             elem.style[name_prop as any] = new_value;
         });
     }
+    private _getData(number_couples: (number[])[], time_fraction: number) {
+        let result = [];
+        for (let [start, end] of number_couples) {
+            result.push(
+                this._calculate(time_fraction, start, end)
+            );
+        }
+        return result;
+    }
 
 };
 
 // exports ================================================== //
-export { AnimationJS };
-export { TIMING_FUNCTIONS } from "./constants/timingFunctions/index.js";
+export { AnimationJS, TIMING_FUNCTIONS };

@@ -1,12 +1,12 @@
 // main ===================================================== //
 // types ---------------------------------------------------- //
-import { getId } from "./helpers/getId.js";
 import type { 
     AnimaitonSettings,
     Properties
-} from "../shared/types/index";
+} from "../shared/types/index.d.ts";
 // helpers -------------------------------------------------- //
-import { getValidProperty } from "./helpers/getValidProperty.js";
+import { getId } from "./helpers/getId";
+import { getValidProperty } from "./helpers/getValidProperty";
 
 // main ===================================================== //
 abstract class Animation<TimingFunc> {
@@ -27,13 +27,14 @@ abstract class Animation<TimingFunc> {
     public abstract end(): Promise<HTMLElement[]>;
     
     public abstract start(
+        timing_function: TimingFunc | CSSStyleDeclaration["animation"],
+    ): Promise<HTMLElement[]>;
+    public abstract start(
         timing_function: TimingFunc,
         duration: number,
         delay?: number
     ): Promise<HTMLElement[]>;
-    public abstract start(
-        timing_function: TimingFunc | CSSStyleDeclaration["animation"],
-    ): Promise<HTMLElement[]>;
+
 
     // protected -------------------------------------------- //
     protected _id_animation: string;

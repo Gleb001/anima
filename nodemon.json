@@ -1,8 +1,8 @@
 {
     "watch": "src/**",
     "ext": "ts",
-    "exec": "npm run build",
-    "ignore": [
-        "src/**/test/**"
-    ]
+    "exec": [
+        "npm run build"
+    ],
+    "ignore": [ "**/test/**" ]
 }

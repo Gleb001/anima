@@ -1,8 +1,8 @@
 // imports ================================================== //
 // types ---------------------------------------------------- //
-import type { Properties, ValidProperty } from "../../shared/types/index";
+import type { Properties, ValidProperty } from "../../shared/types/index.d.ts";
 // helpers -------------------------------------------------- //
-import { createKeyframesAnimation } from "./createKeyframesAnimation.js";
+import { createKeyframesAnimation } from "./createKeyframesAnimation";
 
 // main ===================================================== //
 export function createFileAnimationCSS(
