@@ -1,9 +1,9 @@
 // imports ================================================== //
 // types ---------------------------------------------------- //
-import type { Properties } from "../shared/types/index.d.ts";
+import type { Properties } from "../shared/types/index";
 // helpers -------------------------------------------------- //
 import { Animation } from "../animation/index";
-import { timeout } from "../animationJS/helpers/timeout";
+import { timeout } from "../shared/helpers/timeout";
 import { createFileAnimationCSS } from "./helpers/createFileAnimationCSS";
 import { parseTimingFunction } from "./helpers/parseTimingFunction";
 
@@ -25,13 +25,9 @@ class AnimationCSS extends Animation<string> {
     public async start(
         timing_function: CSSStyleDeclaration["animation"]
     ) {
-        this._settings.elems.forEach(elem => {
-            elem.style.animation = (
-                this._id_animation +
-                " " +
-                timing_function
-            );
-        });
+        for (let elem of this._settings.elems) {
+            elem.style.animation = this._id_animation + " " + timing_function;
+        }
 
         let {
             duration,
@@ -43,38 +39,37 @@ class AnimationCSS extends Animation<string> {
 
         document.body.append(this._css_file);
 
-        await timeout(delay + duration * iteration_count);
+        await timeout(delay + (duration * iteration_count));
         return await this.end();
     }
     public async end() {
-
-        let { elems, props } = this._settings;
-
-        if (!this._isReversed) {
-            for (let elem of elems) {
-                for (let name_prop in props) {
-                    let { number_couples, pattern } = props[name_prop]!;
-                    for (let [start, end] of number_couples) {
-                        elem.style[name_prop] = pattern.replace("?", end.toString());
-                    }
-                    elem.style.animation = "";
-                }
-            }
-        } else {
-            for (let elem of elems) {
-                elem.style.animation = "";
-            }
-        }
-
-        await timeout(25); // wait set props for elems
+        this._setPropsForElems();
         this._css_file.remove();
-
+        await timeout(25); // wait set props for elems
         return this._settings.elems;
     }
 
     // private ---------------------------------------------- //
     private _css_file: HTMLStyleElement
     private _isReversed: boolean = false;
+
+    private _setPropsForElems() {
+
+        let { elems, props } = this._settings;
+
+        for (let elem of elems) {
+            if (!this._isReversed) {
+                for (let name_prop in props) {
+                    let { number_couples, pattern } = props[name_prop]!;
+                    for (let [start, end] of number_couples) {
+                        elem.style[name_prop] = pattern.replace("?", end.toString());
+                    }
+                }
+            }
+            elem.style.animation = "";
+        }
+
+    }
 
 };
 

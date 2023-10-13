@@ -1,31 +1,26 @@
 // import =================================================== //
 // types ---------------------------------------------------- //
-import type { TimingFunction } from "./types/index.d.ts";
-import type { NamesTimingFunction } from "./constants/timingFunctions/types/index.d.ts";
+import type { TimingFunction } from "./types/index";
+import type { NamesTimingFunction } from "./constants/timingFunctions/types/index";
 // constants ------------------------------------------------ //
 import { TIMING_FUNCTIONS } from "./constants/timingFunctions/index";
 // helpers -------------------------------------------------- //
-import { timeout } from "./helpers/timeout";
+import { timeout } from "../shared/helpers/timeout";
 import { replace } from "./helpers/replace";
-// parent class ---------------------------------------------
+// parent class --------------------------------------------- //
 import { Animation } from "../animation/index";
 
 // main ===================================================== //
 class AnimationJS extends Animation<TimingFunction> {
 
     // public ----------------------------------------------- //
-    // @ts-ignore: incapsultaion this method object
+    // @ts-ignore: incapsultaion this method
     public async start(
         timing_function: TimingFunction | NamesTimingFunction,
         duration: number,
         delay?: number
     ) {
-        if (typeof timing_function === "string") {
-            this._settings.timing_function = TIMING_FUNCTIONS[timing_function];
-        } else {
-            this._settings.timing_function = timing_function;
-        }
-
+        this._setTimingFunction(timing_function);
         typeof delay === "number" && await timeout(delay);
         await this._playAnimation(Number(duration));
         return await this.end();
@@ -40,6 +35,7 @@ class AnimationJS extends Animation<TimingFunction> {
     // private ---------------------------------------------- //
     private _requestAnimationId: number = 0
 
+    // main internal mechanism this module
     private _playAnimation(duration: number) {
         let animation = this;
 
@@ -83,6 +79,29 @@ class AnimationJS extends Animation<TimingFunction> {
         this._settings.elems.forEach(elem => {
             elem.style[name_prop as any] = new_value;
         });
+    }
+
+    // transform data for needs this module
+    private _setTimingFunction(value: TimingFunction | NamesTimingFunction) {
+
+        let isNameTimingFunction = (
+            typeof value === "string" &&
+            typeof TIMING_FUNCTIONS[value] === "function"
+        );
+
+        if (isNameTimingFunction) {
+            this._settings.timing_function = TIMING_FUNCTIONS[value as any];
+        } else if (typeof value === "function") {
+            this._settings.timing_function = value;
+        } else {
+            throw new Error(
+                `Timing function ${value} is no valid. ` +
+                `Timing function in animationJS should ` +
+                `be special name timing function or `    +
+                `special function... `
+            );
+        }
+
     }
     private _getData(number_couples: (number[])[], time_fraction: number) {
         let result = [];

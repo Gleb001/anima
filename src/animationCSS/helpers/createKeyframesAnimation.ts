@@ -1,5 +1,5 @@
 // imports ================================================== //
-import type { Properties, ValidProperty } from "../../shared/types/index.d.ts";
+import type { Properties, ValidProperty } from "../../shared/types/index";
 
 // additional functions ===================================== //
 function getFromAndToValueProp(valid_props: Properties<ValidProperty>) {

@@ -3,7 +3,7 @@
 import type { 
     AnimaitonSettings,
     Properties
-} from "../shared/types/index.d.ts";
+} from "../shared/types/index";
 // helpers -------------------------------------------------- //
 import { getId } from "./helpers/getId";
 import { getValidProperty } from "./helpers/getValidProperty";
