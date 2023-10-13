@@ -1,5 +1,5 @@
 // imports ================================================== //
-import type { ValidProperty } from "../../shared/types/index";
+import type { ValidProperty } from "../../types/index";
 
 // types ==================================================== //
 type getValidProperty = (property: string) => ValidProperty

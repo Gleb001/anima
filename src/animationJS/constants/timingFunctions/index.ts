@@ -4,8 +4,8 @@ import type { TimingFunctionList } from "./types/index.d.ts";
 // main ===================================================== //
 const TIMING_FUNCTIONS: TimingFunctionList = {
     ease(time_fraction: number) {
-        // y = sin (x * π/4)
-        return Math.sin(time_fraction * Math.PI / 4);
+        // y = sin (x * π/2)
+        return Math.sin(time_fraction * Math.PI / 2);
     },
     ease_in(time_fraction: number) {
         // y = x^2

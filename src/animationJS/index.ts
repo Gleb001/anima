@@ -6,15 +6,14 @@ import type { NamesTimingFunction } from "./constants/timingFunctions/types/inde
 import { TIMING_FUNCTIONS } from "./constants/timingFunctions/index";
 // helpers -------------------------------------------------- //
 import { timeout } from "../shared/helpers/timeout";
-import { replace } from "./helpers/replace";
 // parent class --------------------------------------------- //
-import { Animation } from "../animation/index";
+import { Animation } from "../shared/animation/index";
 
 // main ===================================================== //
 class AnimationJS extends Animation<TimingFunction> {
 
     // public ----------------------------------------------- //
-    // @ts-ignore: incapsultaion this method
+    // @ts-ignore: incapsultaion method
     public async start(
         timing_function: TimingFunction | NamesTimingFunction,
         duration: number,
@@ -34,8 +33,8 @@ class AnimationJS extends Animation<TimingFunction> {
 
     // private ---------------------------------------------- //
     private _requestAnimationId: number = 0
+    private _time_fraction!: number
 
-    // main internal mechanism this module
     private _playAnimation(duration: number) {
         let animation = this;
 
@@ -48,7 +47,8 @@ class AnimationJS extends Animation<TimingFunction> {
                     let time_fraction = (timestamp - start_animation) / duration;
                     if (time_fraction > 1) time_fraction = 1;
 
-                    animation._changeEachPropertyInOrder(time_fraction);
+                    animation._time_fraction = time_fraction;
+                    animation._changeEachProperty();
 
                     if (time_fraction < 1) {
                         window.requestAnimationFrame(animate);
@@ -60,28 +60,20 @@ class AnimationJS extends Animation<TimingFunction> {
             );
         });
     }
-    private _changeEachPropertyInOrder(time_fraction: number) {
-        let { props } = this._settings;
-        for (let name_prop in props) {
-            let { number_couples, pattern } = props[name_prop]!;
-            let data = this._getData(number_couples, time_fraction);
-            let value_prop = replace(pattern, "?", data);
-            this._draw(name_prop, value_prop);
-        }
-    }
     private _calculate(time_fraction: number, start: number, end: number) {
         let added_value = end - start;
         let percent = this._settings.timing_function!(time_fraction);
         let part_added_number = percent * added_value;
         return start + part_added_number;
     }
-    private _draw(name_prop: string, new_value: string) {
-        this._settings.elems.forEach(elem => {
-            elem.style[name_prop as any] = new_value;
-        });
+    private _getData(number_couples: (number[])[]) {
+        let result = [];
+        for (let [start, end] of number_couples) {
+            let value = this._calculate(this._time_fraction, start, end);
+            result.push(value);
+        }
+        return result;
     }
-
-    // transform data for needs this module
     private _setTimingFunction(value: TimingFunction | NamesTimingFunction) {
 
         let isNameTimingFunction = (
@@ -102,15 +94,6 @@ class AnimationJS extends Animation<TimingFunction> {
             );
         }
 
-    }
-    private _getData(number_couples: (number[])[], time_fraction: number) {
-        let result = [];
-        for (let [start, end] of number_couples) {
-            result.push(
-                this._calculate(time_fraction, start, end)
-            );
-        }
-        return result;
     }
 
 };

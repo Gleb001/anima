@@ -2,12 +2,14 @@
 // types ---------------------------------------------------- //
 import type { Properties } from "../shared/types/index";
 // helpers -------------------------------------------------- //
-import { Animation } from "../animation/index";
 import { timeout } from "../shared/helpers/timeout";
 import { createFileAnimationCSS } from "./helpers/createFileAnimationCSS";
 import { parseTimingFunction } from "./helpers/parseTimingFunction";
+// parent class --------------------------------------------- //
+import { Animation } from "../shared/animation/index";
 
 // main ===================================================== //
+// @ts-ignore: method _getData is protected in parent class
 class AnimationCSS extends Animation<string> {
 
     constructor(
@@ -25,9 +27,7 @@ class AnimationCSS extends Animation<string> {
     public async start(
         timing_function: CSSStyleDeclaration["animation"]
     ) {
-        for (let elem of this._settings.elems) {
-            elem.style.animation = this._id_animation + " " + timing_function;
-        }
+        this._setPropertyAnimation(this._id_animation + " " + timing_function);
 
         let {
             duration,
@@ -43,7 +43,8 @@ class AnimationCSS extends Animation<string> {
         return await this.end();
     }
     public async end() {
-        this._setPropsForElems();
+        if (!this._isReversed) this._changeEachProperty();
+        this._setPropertyAnimation("");
         this._css_file.remove();
         await timeout(25); // wait set props for elems
         return this._settings.elems;
@@ -53,22 +54,15 @@ class AnimationCSS extends Animation<string> {
     private _css_file: HTMLStyleElement
     private _isReversed: boolean = false;
 
-    private _setPropsForElems() {
-
-        let { elems, props } = this._settings;
-
-        for (let elem of elems) {
-            if (!this._isReversed) {
-                for (let name_prop in props) {
-                    let { number_couples, pattern } = props[name_prop]!;
-                    for (let [start, end] of number_couples) {
-                        elem.style[name_prop] = pattern.replace("?", end.toString());
-                    }
-                }
-            }
-            elem.style.animation = "";
+    private _getData(number_couples: (number[])[]) {
+        let result = [];
+        for (let [start, end] of number_couples) {
+            result.push(end);
         }
-
+        return result;
+    }
+    private _setPropertyAnimation(value: string) {
+        this._draw("animation", value);
     }
 
 };
