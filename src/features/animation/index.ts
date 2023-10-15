@@ -1,26 +1,24 @@
 // main ===================================================== //
 // types ---------------------------------------------------- //
-import type { 
-    AnimaitonSettings,
-    Properties
-} from "../types/index";
+import type { PropertiesCSS } from "../../shared/types/index";
+import type { AnimaitonSettings } from "./types/index";
 // helpers -------------------------------------------------- //
 import { getId } from "./helpers/getId";
 import { replace } from "./helpers/replace";
-import { getValidProperty } from "./helpers/getValidProperty";
+import { getValidPropertyCSS } from "./helpers/getValidPropertyCSS";
 
 // main ===================================================== //
 abstract class Animation<TimingFunc> {
 
     constructor(
         elems: [HTMLElement] | HTMLElement[],
-        props: Properties<string>
+        props: PropertiesCSS<string>
     ) {
         this._id_animation = getId();
 
         this._settings.elems = elems;
         for (let name_prop in props) {
-            this._settings.props[name_prop] = getValidProperty(props[name_prop]!);
+            this._settings.props[name_prop] = getValidPropertyCSS(props[name_prop]!);
         }
     }
 
@@ -38,6 +36,7 @@ abstract class Animation<TimingFunc> {
 
 
     // protected -------------------------------------------- //
+    // default
     protected _id_animation: string;
     protected _settings: AnimaitonSettings<TimingFunc> = {
         elems: [],
@@ -61,6 +60,7 @@ abstract class Animation<TimingFunc> {
         }
     }
 
+    // abstract
     protected abstract _getData(number_couples: (number[])[]): number[];
 
 }

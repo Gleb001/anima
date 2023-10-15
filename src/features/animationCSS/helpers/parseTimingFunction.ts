@@ -9,6 +9,7 @@ interface parsedTimingFunction {
 type parseTimingFunction = (data: CSSStyleDeclaration["animation"]) => parsedTimingFunction
 
 // main ===================================================== //
+// Note: Optimize this algorithm!
 export const parseTimingFunction: parseTimingFunction = (data) => {
     let isReversed = false;
     let isInfinity = false;

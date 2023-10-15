@@ -1,38 +1,32 @@
 // imports ================================================== //
-import { Properties } from "../../shared/types/index";
-import { AnimationCSS } from "../index";
+import { PropertiesCSS } from "../../../shared/types/index";
+import { AnimationJS, TIMING_FUNCTIONS } from "../index";
 
 // additional functions ===================================== //
 function getDataForTesting(document: Document) {
 
     let elem = document.getElementById("elem")!;
-    let properties: Properties<string> = {
+    let properties: PropertiesCSS<string> = {
         "width": "0 -> 1999 px",
         "transform": "rotate(0 -> 1999 deg)",
     };
 
-    return [elem, properties] as [HTMLElement, Properties<string>];
+    return [elem, properties] as [HTMLElement, PropertiesCSS<string>];
 
-}
-function removeSpaces(value: string) {
-    return value.replace(/\s/g, "")
 }
 
 // main ===================================================== //
-describe("testing class animationCSS", () => {
+describe("testing class animationJS", () => {
 
     document.body.innerHTML += `<div id="elem"></div>`;
 
     let [elem, properties] = getDataForTesting(document);
-    const animation = new AnimationCSS([elem], properties);
+    const animation = new AnimationJS([elem], properties);
 
-    test("props instance class animationCSS", () => {
+    test("props instance class animationJS", () => {
 
         // @ts-ignore
         expect(typeof animation._id_animation).toBe("string");
-
-        // @ts-ignore
-        expect(animation._isReversed).toBeFalsy();
 
         // @ts-ignore
         expect(animation._settings).toEqual({
@@ -50,22 +44,14 @@ describe("testing class animationCSS", () => {
             timing_function: undefined
         });
 
-        let expect_css_file = (
-            // @ts-ignore
-            `@keyframes ${animation._id_animation} {
-                from { width: 0px;    transform: rotate(0deg);      }
-                to   { width: 1999px; transform: rotate(1999deg);   }
-            }`
-        );
-
         // @ts-ignore
-        expect(removeSpaces(animation._css_file.innerText)).toBe(removeSpaces(expect_css_file));
+        expect(typeof animation._requestAnimationId).toBe("number");
 
     });
 
-    test("start animation CSS", async () => {
+    test("start animation JS", async () => {
 
-        await animation.start("1s linear").then((elems) => {
+        await animation.start("bounce_end", 1000).then((elems) => {
             for (let elem of elems) {
                 expect(elem.style.animation).toBe("");
                 expect(elem.style.width).toBe("1999px");
@@ -75,9 +61,9 @@ describe("testing class animationCSS", () => {
 
     });
 
-    test("stop animation CSS", async () => {
+    test("stop animation JS", async () => {
 
-        animation.start("1s linear");
+        animation.start("linear", 1000);
 
         await animation.end().then((elems) => {
             for (let elem of elems) {

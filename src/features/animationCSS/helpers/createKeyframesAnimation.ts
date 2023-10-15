@@ -1,8 +1,8 @@
 // imports ================================================== //
-import type { Properties, ValidProperty } from "../../shared/types/index";
+import type { PropertiesCSS, ValidPropertyCSS } from "../../../shared/types/index";
 
 // additional functions ===================================== //
-function getFromAndToValueProp(valid_props: Properties<ValidProperty>) {
+function getFromAndToValueProp(valid_props: PropertiesCSS<ValidPropertyCSS>) {
 
     let result = ["", ""];
 
@@ -21,7 +21,7 @@ function getFromAndToValueProp(valid_props: Properties<ValidProperty>) {
                 index_row++;
             } else {
                 from_prop += char;
-                to_prop += char;
+                to_prop   += char;
             }
         }
 
@@ -35,17 +35,14 @@ function getFromAndToValueProp(valid_props: Properties<ValidProperty>) {
 
 // main ===================================================== //
 export function createKeyframesAnimation(
-    props: Properties<ValidProperty>,
+    props: PropertiesCSS<ValidPropertyCSS>,
     name: string
 ) {
-
-    let [from_properties, to_properties] = getFromAndToValueProp(props);
-
+    let [from_propertiesCSS, to_propertiesCSS] = getFromAndToValueProp(props);
     return (`
         @keyframes ${name} {
-            from { ${from_properties} }
-            to   { ${to_properties}   }
+            from { ${from_propertiesCSS} }
+            to   { ${to_propertiesCSS}   }
         }
     `);
-
 }

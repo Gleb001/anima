@@ -5,9 +5,9 @@ import type { NamesTimingFunction } from "./constants/timingFunctions/types/inde
 // constants ------------------------------------------------ //
 import { TIMING_FUNCTIONS } from "./constants/timingFunctions/index";
 // helpers -------------------------------------------------- //
-import { timeout } from "../shared/helpers/timeout";
+import { timeout } from "../../shared/helpers/timeout";
 // parent class --------------------------------------------- //
-import { Animation } from "../shared/animation/index";
+import { Animation } from "../animation/index";
 
 // main ===================================================== //
 class AnimationJS extends Animation<TimingFunction> {

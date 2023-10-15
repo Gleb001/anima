@@ -1,12 +1,12 @@
 // imports ================================================== //
 // types ---------------------------------------------------- //
-import type { Properties, ValidProperty } from "../../shared/types/index";
+import type { PropertiesCSS, ValidPropertyCSS } from "../../../shared/types/index";
 // helpers -------------------------------------------------- //
 import { createKeyframesAnimation } from "./createKeyframesAnimation";
 
 // main ===================================================== //
 export function createFileAnimationCSS(
-    props: Properties<ValidProperty>,
+    props: PropertiesCSS<ValidPropertyCSS>,
     name: string
 ) {
     let css_file = document.createElement("style");

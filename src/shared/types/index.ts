@@ -1,22 +1,14 @@
 // types ======================================================= //
-// simple types ------------------------------------------------ //
-interface ValidProperty {
+interface ValidPropertyCSS {
     number_couples: (number[])[],
     pattern: string
 }
-type Properties<T> = {
+type PropertiesCSS<T> = {
     [key in keyof CSSStyleDeclaration]?: T
-}
-// complex types ----------------------------------------------- //
-interface AnimaitonSettings<TypeTimingFunc> {
-    elems: (HTMLElement)[],
-    props: Properties<ValidProperty>,
-    timing_function?: TypeTimingFunc,
 }
 
 // exports ===================================================== //
 export {
-    Properties,
-    ValidProperty,
-    AnimaitonSettings,
+    PropertiesCSS,
+    ValidPropertyCSS,
 };

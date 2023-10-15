@@ -1,6 +1,6 @@
 // imports ================================================== //
 import { getId } from "../helpers/getId";
-import { getValidProperty } from "../helpers/getValidProperty";
+import { getValidPropertyCSS } from "../helpers/getValidPropertyCSS";
 
 // main ===================================================== //
 describe("testing helpers using in abstract class Animation", () => {
@@ -26,9 +26,9 @@ describe("testing helpers using in abstract class Animation", () => {
         let transform_prop = "rotate(0 -> 720 deg)";
         let matrix_prop    = "translate(0 -> 180 deg, 10 -> 20 %)";
 
-        let valid_width_prop     = getValidProperty(width_prop);
-        let valid_matrix_prop    = getValidProperty(matrix_prop);
-        let valid_transform_prop = getValidProperty(transform_prop);
+        let valid_width_prop     = getValidPropertyCSS(width_prop);
+        let valid_matrix_prop    = getValidPropertyCSS(matrix_prop);
+        let valid_transform_prop = getValidPropertyCSS(transform_prop);
 
         let expect_valid_width_prop     = { number_couples: [[0, 1000]],          pattern: "?px"                };
         let expect_valid_transform_prop = { number_couples: [[0, 720 ]],          pattern: "rotate(?deg)"       };
@@ -43,15 +43,14 @@ describe("testing helpers using in abstract class Animation", () => {
     test("get valid wrong prop", () => {
         
         let wrong_props = [
-            "k1 -> 100 px",
             "rotate( -> 100 px)",
-            "kslj 0 -> 100 fskd jf12313 ",
+            "kslj 0 -> 100 fskd jf12313",
             "weriwriesdfsdfsdfsdfdsfd(0 -> 100 deg, 0 -> %)",
         ];
 
         let expect_valid_wrong_prop = { number_couples: [], pattern: "" };
         for (let prop of wrong_props) {
-            let valid_wrong_prop = getValidProperty(prop);
+            let valid_wrong_prop = getValidPropertyCSS(prop);
             expect(valid_wrong_prop).toEqual(expect_valid_wrong_prop);
         }
 

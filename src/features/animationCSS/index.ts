@@ -1,12 +1,12 @@
 // imports ================================================== //
 // types ---------------------------------------------------- //
-import type { Properties } from "../shared/types/index";
+import type { PropertiesCSS } from "../../shared/types/index";
 // helpers -------------------------------------------------- //
-import { timeout } from "../shared/helpers/timeout";
+import { timeout } from "../../shared/helpers/timeout";
 import { createFileAnimationCSS } from "./helpers/createFileAnimationCSS";
 import { parseTimingFunction } from "./helpers/parseTimingFunction";
 // parent class --------------------------------------------- //
-import { Animation } from "../shared/animation/index";
+import { Animation } from "../animation/index";
 
 // main ===================================================== //
 // @ts-ignore: method _getData is protected in parent class
@@ -14,7 +14,7 @@ class AnimationCSS extends Animation<string> {
 
     constructor(
         elems: [HTMLElement] | HTMLElement[],
-        props: Properties<string>
+        props: PropertiesCSS<string>
     ) {
         super(elems, props);
         this._css_file = createFileAnimationCSS(

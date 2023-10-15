@@ -1,2 +1,2 @@
-export { AnimationCSS } from "./animationCSS/index";
-export { AnimationJS } from "./animationJS/index";
+export { AnimationCSS } from "./features/animationCSS/index";
+export { AnimationJS } from "./features/animationJS/index";
