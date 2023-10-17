@@ -6,10 +6,10 @@ describe("Testing the parseTimingFunction helper", () => {
 
     test("getting full timing data", () => {
         
-        let timingfunction = "3s ease-in 1s 35 reverse both running slide";
+        let timingfunction_1 = "3s ease-in 1s 35 reverse both running slide";
 
-        let timing_data = parseTimingFunction(timingfunction);
-        let expect_timing_data = {
+        let timing_data_1 = parseTimingFunction(timingfunction_1);
+        let expect_timing_data_1 = {
             duration: 3000,
             delay: 1000,
             iteration_count: 35,
@@ -17,7 +17,20 @@ describe("Testing the parseTimingFunction helper", () => {
             isInfinity: false
         };
 
-        expect(timing_data).toEqual(expect_timing_data);
+        expect(timing_data_1).toEqual(expect_timing_data_1);
+
+        let timingfunction_2 = ".3s ease-in 100ms infinity";
+
+        let timing_data_2 = parseTimingFunction(timingfunction_2);
+        let expect_timing_data_2 = {
+            duration: 300,
+            delay: 100,
+            iteration_count: 1,
+            isReversed: false,
+            isInfinity: true
+        };
+
+        expect(timing_data_2).toEqual(expect_timing_data_2);
 
     });
 

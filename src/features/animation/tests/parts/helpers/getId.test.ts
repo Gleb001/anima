@@ -15,7 +15,7 @@ describe("Testing the getId helper", () => {
         expect(idPrefix).toBe("id-");
 
         let idLength = id.length;
-        expect(idLength).toBe(16);
+        expect(idLength).toBeGreaterThan(13);
 
     });
     

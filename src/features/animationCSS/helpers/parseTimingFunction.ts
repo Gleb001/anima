@@ -6,61 +6,77 @@ interface parsedTimingFunction {
     isReversed: boolean,
     isInfinity: boolean
 }
+interface Measurementnumbers {
+    [key: string]: number,
+}
 type parseTimingFunction = (data: CSSStyleDeclaration["animation"]) => parsedTimingFunction
 
-// main ===================================================== //
-// Note: Optimize this algorithm!
-export const parseTimingFunction: parseTimingFunction = (data) => {
-    let isReversed = false;
-    let isInfinity = false;
-    let indexIterationCount = -1;
-    let nums = (
-        data
-            .split(" ")
-            .filter(word => {
-                switch (word) {
-                    case "reverse":
-                        isReversed = true;
-                        break;
-                    case "infinity":
-                        isInfinity = true;
-                        break;
-                    default:
-                        for (let char of word) {
-                            let isNumber = !Number.isNaN(Number(char))
-                            if (isNumber) return true;
-                        }
-                        break;
-                }
-                return false;
-            })
-            .map((word, index) => {
-                for (let index = 0; index < word.length; index++) {
-                    let char = word[index];
-                    switch (char) {
-                        case "m" : return Number(word.slice(0, index));
-                        case "s" : return Number(word.slice(0, index)) * 1000;
-                        default  : break;
-                    }
-                }
-                indexIterationCount = index;
-                return Number(word);
-            })
-    );
+// constants ================================================ //
+const MEASUREMENTS_numberS: Measurementnumbers = {
+    "s": 1000,
+    "ms": 1,
+};
 
-    if (indexIterationCount !== 2 && indexIterationCount !== -1) {
-        if (indexIterationCount === 1) nums.push(0);
-        let value = nums.splice(indexIterationCount, 1);
-        nums.push(value[0]);
+// additional functions ===================================== //
+function isNumber(number: string) {
+    return !Number.isNaN(Number(number));
+}
+function convertToNumber(value: string) {
+
+    let number = 0;
+    let measurement = "";
+    for (let index = value.length - 1; index >= 0; index--) {
+        let char = value[index];
+        if (isNumber(char)) {
+            number = Number(value.slice(0, index + 1));
+            break;
+        }
+        measurement = char + measurement;
     }
 
-    return (
-        {
-            duration        : typeof nums[0] === "number" ? nums[0] : 0,
-            delay           : typeof nums[1] === "number" ? nums[1] : 0,
-            iteration_count : typeof nums[2] === "number" ? nums[2] : 1,
-            isReversed      : isReversed,
-            isInfinity      : isInfinity
+
+
+    let coefficient = Number(MEASUREMENTS_numberS[measurement]);
+    if (Number.isNaN(coefficient) || coefficient === 0) coefficient = 1;
+
+    return number * coefficient;
+
+}
+
+// main ===================================================== //
+export const parseTimingFunction: parseTimingFunction = (timing_function) => {
+
+    let result: parsedTimingFunction = {
+        delay: 0,
+        duration: 0,
+        isReversed: false,
+        isInfinity: false,
+        iteration_count: 1,
+    };
+
+    let word = "";
+    for (let char of timing_function + " ") {
+        if (char === " ") {
+            if (word === "reverse") {
+                result.isReversed = true;
+            } else if (word === "infinity") {
+                result.isInfinity = true;
+            } else if (isNumber(word[0]) || word[0] === ".") {
+                let number = convertToNumber(word);
+                if (isNumber(word[word.length - 1])) {
+                    result.iteration_count = number;
+                } else if (result.duration === 0) {
+                    result.duration = number;
+                } else if (result.delay === 0) {
+                    result.delay = number;
+                }
+            }
+            word = "";
+        } else {
+            word += char;
         }
-    );
+    }
+
+    return result;
+
 };
