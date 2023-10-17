@@ -27,6 +27,8 @@ class AnimationCSS extends Animation<string> {
     public async start(
         timing_function: CSSStyleDeclaration["animation"]
     ) {
+        if (!this._css_file) throw new Error("Css file in AnimationCSS is null");
+
         this._setPropertyAnimation(this._id_animation + " " + timing_function);
 
         let {
@@ -43,15 +45,17 @@ class AnimationCSS extends Animation<string> {
         return await this.end();
     }
     public async end() {
-        if (!this._isReversed) this._changeEachProperty();
-        this._setPropertyAnimation("");
-        this._css_file.remove();
-        await timeout(25); // wait set props for elems
+        if (this._css_file) {
+            if (!this._isReversed) this._changeEachProperty();
+            this._setPropertyAnimation("");
+            this._css_file.remove();
+            await timeout(25); // wait set props for elems
+        }
         return this._settings.elems;
     }
 
     // private ---------------------------------------------- //
-    private _css_file: HTMLStyleElement
+    private _css_file: HTMLStyleElement | null = null
     private _isReversed: boolean = false;
 
     private _getData(number_couples: (number[])[]) {

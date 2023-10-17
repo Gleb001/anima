@@ -38,6 +38,8 @@ export function createKeyframesAnimation(
     props: PropertiesCSS<ValidPropertyCSS>,
     name: string
 ) {
+    if (name === "" || !Object.keys(props).length) return "";
+
     let [from_propertiesCSS, to_propertiesCSS] = getFromAndToValueProp(props);
     return (`
         @keyframes ${name} {

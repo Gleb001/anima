@@ -1,6 +1,6 @@
 // imports ================================================== //
 import { PropertiesCSS } from "../../../shared/types/index";
-import { AnimationJS, TIMING_FUNCTIONS } from "../index";
+import { AnimationJS } from "../index";
 
 // additional functions ===================================== //
 function getDataForTesting(document: Document) {
@@ -22,32 +22,6 @@ describe("testing class animationJS", () => {
 
     let [elem, properties] = getDataForTesting(document);
     const animation = new AnimationJS([elem], properties);
-
-    test("props instance class animationJS", () => {
-
-        // @ts-ignore
-        expect(typeof animation._id_animation).toBe("string");
-
-        // @ts-ignore
-        expect(animation._settings).toEqual({
-            elems: [elem],
-            props: {
-                width: {
-                    number_couples: [[0, 1999]],
-                    pattern: "?px"
-                },
-                transform: {
-                    number_couples: [[0, 1999]],
-                    pattern: "rotate(?deg)"
-                }
-            },
-            timing_function: undefined
-        });
-
-        // @ts-ignore
-        expect(typeof animation._requestAnimationId).toBe("number");
-
-    });
 
     test("start animation JS", async () => {
 

@@ -5,76 +5,72 @@ import type { ValidPropertyCSS } from "../../../shared/types/index";
 type getValidPropertyCSS = (property: string) => ValidPropertyCSS
 
 // constants ================================================ //
-const REG_EXPS = {
-    getNumbers: /\d{0,}/g,
-    getNumberToNumber: (
-        /\s{0,}\d\s{0,}\d{0,}[\W]?->\s{0,}[\W]?\d{0,}\s{0,}/g
-    ),
-};
+const REMOVED_CHARS = [
+    " ",
+    "-",
+    ">"
+];
 
 // additional functions ===================================== //
-function isValidPropertyCSS(property: ValidPropertyCSS) {
-
-    let length_couples      = property.number_couples.length;
-    let length_spec_symbols = getNumberSymbol(property.pattern, "?");
-    let last_couples        = property.number_couples[length_couples - 1];
-
-    let hasSpecSymbols = (length_spec_symbols === length_couples);
-    let hasFullCouples = (last_couples.length === 2);
-    
-    return (
-        hasFullCouples &&
-        hasSpecSymbols
-    );
-
+function isNumber(value: string | number) {
+    return !Number.isNaN(Number(value)) && value !== " ";
 }
-function getNumberSymbol(value: string, target: string) {
-    let counter = 0;
-    for (let char of value) {
-        if (char === target) counter++;
+function isRemovedChar(removed_chars: string[], target: string) {
+    for (let removed_char of removed_chars) {
+        if (removed_char === target) return true;
     }
-    return counter;
-}
-// Example:
-// rotate( 0 -> 100 deg)  |  0 -> 100 px
-// [[0, 100]]             |  [[0, 100]]
-function getNumberCouples(property: string) {
-
-    let numbers = (
-        property
-            .match(REG_EXPS.getNumbers)!
-            .filter(str_num => str_num !== "")
-    );
-
-    let result = [];
-    for (let number of numbers) {
-        let couple = result[result.length - 1];
-        if (!couple || couple.length === 2) {
-            result.push([Number(number)]);
-        } else {
-            couple.push(Number(number));
-        }
-    }
-
-    return result as (number[])[];
-    
+    return false;
 }
 
 // main ===================================================== //
-// Note: it is necessary to optimize the algorithm for
-// creating a valid property.
-// We need to write an algorithm in one cycle!
 export const getValidPropertyCSS: getValidPropertyCSS = (property) => {
-    
+
     let result = {
-        number_couples : getNumberCouples(property),
-        pattern        : property.replace(REG_EXPS.getNumberToNumber, "?"),
-    };
-    let empty_valid_property_css = {
-        number_couples : [],
+        number_couples: [] as (number[])[],
         pattern: ""
     };
 
-    return isValidPropertyCSS(result) ? result : empty_valid_property_css;
+    let cur_number = "";
+    let prev_number = "";
+    for (let char of property) {
+
+        if (isNumber(char)) {
+            cur_number += char;
+        } else {
+            if (cur_number !== "") {
+                if (prev_number === "") {
+                    prev_number = cur_number;
+                    cur_number = "";
+                } else {
+                    result.number_couples.push([
+                        Number(prev_number),
+                        Number(cur_number)
+                    ]);
+                    prev_number = "";
+                    cur_number = "";
+                    result.pattern += "?";
+                }
+            }
+            if (!isRemovedChar(REMOVED_CHARS, char)) {
+                result.pattern += char;
+            }
+        }
+
+    }
+
+    let isEmptyPrevAndCurNumbers = (
+        cur_number  === "" &&
+        prev_number === "" 
+    );
+    let isFullNumberCouples = (
+        result.number_couples.length > 0 &&
+        result.number_couples[result.number_couples.length - 1].length === 2
+    );
+
+    if (isEmptyPrevAndCurNumbers && isFullNumberCouples) {
+        return result;
+    } else {
+        return { number_couples: [], pattern: "" };
+    }
 
 };
