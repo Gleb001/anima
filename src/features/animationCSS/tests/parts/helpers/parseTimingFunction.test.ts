@@ -14,12 +14,12 @@ describe("Testing the parseTimingFunction helper", () => {
             delay: 1000,
             iteration_count: 35,
             isReversed: true,
-            isInfinity: false
+            isInfinite: false
         };
 
         expect(timing_data_1).toEqual(expect_timing_data_1);
 
-        let timingfunction_2 = ".3s ease-in 100ms infinity";
+        let timingfunction_2 = ".3s ease-in 100ms infinite";
 
         let timing_data_2 = parseTimingFunction(timingfunction_2);
         let expect_timing_data_2 = {
@@ -27,7 +27,7 @@ describe("Testing the parseTimingFunction helper", () => {
             delay: 100,
             iteration_count: 1,
             isReversed: false,
-            isInfinity: true
+            isInfinite: true
         };
 
         expect(timing_data_2).toEqual(expect_timing_data_2);
@@ -44,7 +44,7 @@ describe("Testing the parseTimingFunction helper", () => {
             delay: 0,
             iteration_count: 35,
             isReversed: true,
-            isInfinity: false
+            isInfinite: false
         };
 
         expect(timing_data).toEqual(expect_timing_data);
@@ -61,7 +61,7 @@ describe("Testing the parseTimingFunction helper", () => {
             delay: 0,
             iteration_count: 1,
             isReversed: true,
-            isInfinity: false
+            isInfinite: false
         };
 
         expect(timing_data).toEqual(expect_timing_data);
@@ -78,7 +78,7 @@ describe("Testing the parseTimingFunction helper", () => {
             delay: 0,
             iteration_count: 1,
             isReversed: false,
-            isInfinity: false
+            isInfinite: false
         };
 
         expect(timing_data).toEqual(expect_timing_data);
@@ -95,7 +95,7 @@ describe("Testing the parseTimingFunction helper", () => {
             delay: 0,
             iteration_count: 1,
             isReversed: false,
-            isInfinity: false
+            isInfinite: false
         };
 
         expect(timing_data).toEqual(expect_timing_data);
@@ -112,7 +112,7 @@ describe("Testing the parseTimingFunction helper", () => {
             delay: 0,
             iteration_count: 1,
             isReversed: false,
-            isInfinity: false
+            isInfinite: false
         };
 
         expect(timing_data).toEqual(expect_timing_data);

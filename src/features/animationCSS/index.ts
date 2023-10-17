@@ -35,14 +35,20 @@ class AnimationCSS extends Animation<string> {
             duration,
             delay,
             iteration_count,
-            isReversed
+            isReversed,
+            isInfinite
         } = parseTimingFunction(timing_function);
         this._isReversed = isReversed;
 
         document.body.append(this._css_file);
 
-        await timeout(delay + (duration * iteration_count));
-        return await this.end();
+        if (isInfinite) {
+            return [];
+        } else {
+            await timeout(delay + (duration * iteration_count));
+            return await this.end();
+        }
+        
     }
     public async end() {
         if (this._css_file) {

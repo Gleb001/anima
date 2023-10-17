@@ -1,30 +1,27 @@
 {
   "name": "anima",
+  "author": {
+    "name": "Gleb Li",
+    "url": "https://github.com/Gleb001"
+  },
+  "homepage": "https://github.com/Gleb001/anima#readme",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "Simplification of the animation creation process in the browser environment",
-  "main": "index.ts",
-  "scripts": {
-    "watch": "nodemon",
-    "build": "npx tsc --build && npx fix-esm-import-path build ",
-    "test": "jest"
+  "keywords": [
+    "anima",
+    "animation",
+    "requestAnimationFrame",
+    "javascript"
+  ],
+  "bugs": {
+    "url": "https://github.com/Gleb001/anima/issues"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Gleb001/anima"
   },
-  "keywords": [
-    "anima",
-    "animation",
-    "requestAnimationFrame"
-  ],
-  "bugs": {
-    "url": "https://github.com/Gleb001/anima/issues"
-  },
-  "author": {
-    "name": "Gleb Li",
-    "url": "https://github.com/Gleb001"
-  },
-  "license": "MIT",
+  "main": "./src/index.ts",
   "devDependencies": {
     "@types/jest": "^29.5.5",
     "fix-esm-import-path": "^1.4.0",
@@ -33,5 +30,10 @@
     "nodemon": "^3.0.1",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "watch": "nodemon",
+    "build": "npx tsc --build --clean && npx tsc --build && npx fix-esm-import-path ./anima/lib",
+    "test": "jest"
   }
 }

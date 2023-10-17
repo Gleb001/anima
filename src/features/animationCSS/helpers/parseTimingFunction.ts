@@ -4,7 +4,7 @@ interface parsedTimingFunction {
     delay: number,
     iteration_count: number,
     isReversed: boolean,
-    isInfinity: boolean
+    isInfinite: boolean
 }
 interface Measurementnumbers {
     [key: string]: number,
@@ -50,7 +50,7 @@ export const parseTimingFunction: parseTimingFunction = (timing_function) => {
         delay: 0,
         duration: 0,
         isReversed: false,
-        isInfinity: false,
+        isInfinite: false,
         iteration_count: 1,
     };
 
@@ -59,8 +59,8 @@ export const parseTimingFunction: parseTimingFunction = (timing_function) => {
         if (char === " ") {
             if (word === "reverse") {
                 result.isReversed = true;
-            } else if (word === "infinity") {
-                result.isInfinity = true;
+            } else if (word === "infinite") {
+                result.isInfinite = true;
             } else if (isNumber(word[0]) || word[0] === ".") {
                 let number = convertToNumber(word);
                 if (isNumber(word[word.length - 1])) {

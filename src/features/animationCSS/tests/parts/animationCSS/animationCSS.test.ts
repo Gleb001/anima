@@ -53,9 +53,31 @@ describe("testing class animationCSS", () => {
 
     });
 
+    test("start inifinity animation CSS", async () => {
+
+        await animation.start("1s linear infinite").then((elems) => {
+            expect(elems).toEqual([]);
+        });
+
+    });
+
     test("stop animation CSS", async () => {
 
         animation.start("1s linear");
+
+        await animation.end().then((elems) => {
+            for (let elem of elems) {
+                expect(elem.style.animation).toBe("");
+                expect(elem.style.width).toBe("1999px");
+                expect(elem.style.transform).toBe("rotate(1999deg)");
+            }
+        });
+
+    });
+
+    test("stop inifinity animation CSS", async () => {
+
+        animation.start("1s linear infinite");
 
         await animation.end().then((elems) => {
             for (let elem of elems) {
