@@ -1,2 +1,2 @@
-# anima
+# Moveton
 Simplification of the animation creation process in the browser environment
