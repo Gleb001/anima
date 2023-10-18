@@ -1,10 +1,10 @@
 {
-  "name": "anima",
+  "name": "moveton",
   "author": {
     "name": "Gleb Li",
     "url": "https://github.com/Gleb001"
   },
-  "homepage": "https://github.com/Gleb001/anima#readme",
+  "homepage": "https://github.com/Gleb001/moveton#readme",
   "version": "1.0.0",
   "license": "MIT",
   "description": "Simplification of the animation creation process in the browser environment",
@@ -12,14 +12,15 @@
     "anima",
     "animation",
     "requestAnimationFrame",
-    "javascript"
+    "javascript",
+    "css"
   ],
   "bugs": {
-    "url": "https://github.com/Gleb001/anima/issues"
+    "url": "https://github.com/Gleb001/moveton/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Gleb001/anima"
+    "url": "https://github.com/Gleb001/moveton"
   },
   "main": "./src/index.ts",
   "devDependencies": {
