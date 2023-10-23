@@ -100,7 +100,7 @@ animation_css.start("1s linear");
 Также в процессе проигрывания анимации вы можете её остановить, вернув в конечное состояние, указанное при создании анимации:
 ```js
 // создаём анимацию
-let animation = new AnimationCSS([elem], { "widht": "100 -> 500px" });
+let animation = new AnimationCSS([elem], { "width": "100 -> 500px" });
 // запускаем анимацию, которая длится 1000 миллисекунд
 animation.start("1s ease-in");
 // останавливаем анимацию сразу после начала проигрывания
@@ -112,7 +112,7 @@ animation.end();
 ## Как получить измененные (в процессе проигрывания анимации) элементы?
 Сам вызов анимации является асинхронным, поэтому по завершению анимации (как принудительно, так и нет) вы можете получить измененный html элемент:
 ```js
-let animation = new AnimationCSS([elem], { "widht": "100 -> 500px" });
+let animation = new AnimationCSS([elem], { "width": "100 -> 500px" });
 animation
   .start("1s linear")                      // вызов анимации
   .then((elems) => console.log(elems))     // по завершению можем получить доступ к переданным html элементам
@@ -226,7 +226,7 @@ animation_css.start("1s linear");
 Also, in the process of playing an animation, you can stop it by returning it to the final state specified when creating the animation:
 ```js
 // create animation
-let animation = new AnimationCSS([elem], { "widht": "100 -> 500px" });
+let animation = new AnimationCSS([elem], { "width": "100 -> 500px" });
 // we start an animation that lasts 1000 milliseconds
 animation.start("1s ease-in");
 // we stop the animation immediately after the start of playback
@@ -238,7 +238,7 @@ animation.end();
 ## How do I get the elements changed (during animation playback)?
 The animation call itself is asynchronous, so upon completion of the animation (both forced and not) you can get a modified html element:
 ```js
-let animation = new AnimationCSS([elem], { "widht": "100 -> 500px" });
+let animation = new AnimationCSS([elem], { "width": "100 -> 500px" });
 animation
   .start("1s linear")                      // calling the animation
   .then((elems) => console.log(elems))     // upon completion, we can access the passed html elements
