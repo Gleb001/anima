@@ -7,6 +7,7 @@
 
 ## Содержание
 
+* [Как установить библиотеку?](#как-установить-библиотеку)
 * [Зачем мне использовать эту библиотеку?](#зачем-мне-использовать-эту-библиотеку)
 * [Какие анимации я могу создать?](#какие-анимации-я-могу-создать)
 * [Как создать анимацию?](#как-создать-анимацию)
@@ -14,6 +15,14 @@
 * [Как остановить анимацию самостоятельно в любой момент?](#как-остановить-анимацию-самостоятельно-в-любой-момент)
 * [Как получить измененные (в процессе проигрывания анимации) элементы?](#как-получить-измененные-в-процессе-проигрывания-анимации-элементы)
 * [Что вы можете сделать, чтобы помочь библиотеке?](#что-вы-можете-сделать-чтобы-помочь-библиотеке)
+
+## Как установить библиотеку?
+Данная библиотека опубликована в [NPM](https://ru.wikipedia.org/wiki/Npm). [Ссылка на npm-пакет библиотеки](https://www.npmjs.com/package/moveton). Поэтому, чтобы установить библиотеку вам нужно воспользоваться следующей командой в консоли:
+```console
+npm install moveton
+```
+
+После установки приступайте к следующему пункту.
 
 ## Зачем мне использовать эту библиотеку?
 Целью создания данной библиотеки было упрощение работы с анимациями средствами [JavaScript](https://ru.wikipedia.org/wiki/JavaScript). Данная библиотека никак не является де-факто по обязательному использованию - причина этому сильное потребление ресурсов при эксплуатации анимаций данным способом (средствами JavaScript). Однако, если перед вами стоит задача по созданию анимации предложенным способом, то данная библиотека создана для того, чтобы упростить данный процесс.
@@ -131,6 +140,7 @@ animation
 
 ## Table of contents
 
+* [How do I install the library?](#how-do-i-install-the-library)
 * [Why should I use this library?](#why-should-i-use-this-library)
 * [What animations can I create?](#what-animations-can-i-create)
 * [How to create an animation?](#how-to-create-an-animation)
@@ -138,6 +148,14 @@ animation
 * [How can I stop the animation myself at any time?](#how-can-i-stop-the-animation-myself-at-any-time)
 * [How do I get the elements changed (during animation playback)?](#how-do-i-get-the-elements-changed-during-animation-playback)
 * [What can you do to help the library?](#what-can-you-do-to-help-the-library)
+
+## How do I install the library?
+This library is published in [NPM](https://en.wikipedia.org/wiki/Npm). [Link to the library's npm package](https://www.npmjs.com/package/moveton). Therefore, to install the library, you need to use the following command in the console:
+```console
+npm install moveton
+```
+
+After installation, proceed to the next step.
 
 ## Why should I use this library?
 The purpose of creating this library was to simplify working with animations using [JavaScript](https://en.wikipedia.org/wiki/JavaScript). This library is not de facto mandatory in any way - the reason for this is the strong consumption of resources when using animations in this way (using JavaScript). However, if you are faced with the task of creating animation in the proposed way, then this library was created in order to simplify this process.
