@@ -76,8 +76,8 @@ new animation(
 ## Как запустить анимацию?
 После создания анимации вы можете её проиграть, но способ это сделать зависит от вида анимации. Так, например, запуск JavaScript анимации имеет следующие аргументы:
 1. Функция анимации, следуя которой будет проигрываться анимация:
-   1.1 используйте встроенные функции анимации просто написав их наименование ( "linear", "ease", "ease_in", "ease_out", "bounce-end", "bounce-start" );
-   1.2 [напишите собственную функцию анимации](https://habr.com/ru/companies/unigine/articles/680996/), которая имеет следующий вид: (x) => x * x (y = x^2) и т.п.;
+   * Используйте встроенные функции анимации просто написав их наименование ( "linear", "ease", "ease_in", "ease_out", "bounce-end", "bounce-start" );
+   * [Напишите собственную функцию анимации](https://habr.com/ru/companies/unigine/articles/680996/), которая имеет следующий вид: (x) => x * x (y = x^2) и т.п.;
 2. Длительность анимации (в миллисекундах);
 3. Задержка перед запуском анимации (в миллисекундах) - необязательно указывать.
    
@@ -211,8 +211,8 @@ new animation(
 ## How to start an animation?
 After creating an animation, you can play it, but the way to do it depends on the type of animation. So for example, running a JavaScript animation has the following arguments:
 1. Animation function, following which the animation will be played:
-  1.1 use the built-in animation functions by simply writing their name ( "linear", "ease", "ease_in", "ease_out", "bounce-and", "bounce-start" );
-  1.2 [write your own animation function] (http://habr.com/en/companies/unigine/articles/680996/), which has the following form: (x) => x *x (y = x^2), etc;
+  * Use the built-in animation functions by simply writing their name ( "linear", "ease", "ease_in", "ease_out", "bounce-and", "bounce-start" );
+  * [Write your own animation function](http://habr.com/en/companies/unigine/articles/680996/), which has the following form: (x) => x *x (y = x^2), etc;
 2. Animation duration (in milliseconds)
 3. The delay before the animation starts (in milliseconds) - it is not necessary to specify.
 
