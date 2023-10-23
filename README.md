@@ -1,6 +1,6 @@
 # Содержание | Table of contents
 
-* [ToDo list](#moveton-ru)
+* [ToDo list (ru)](#moveton-ru)
 * [ToDo list (en)](#moveton-en)
 
 # Moveton (ru)
