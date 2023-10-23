@@ -204,7 +204,7 @@ let animation_js  = new animationJS(...);
 // playing js animation
 // the first way (via built-in animations):
 animation_js.start(
-  "linear",  // встроенная функция y = x
+  "linear",  // built-in function y = x
   1000,
   100
 );
