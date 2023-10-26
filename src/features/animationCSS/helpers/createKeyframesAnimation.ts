@@ -1,5 +1,5 @@
 // imports ================================================== //
-import type { PropertiesCSS, ValidPropertyCSS } from "../../../shared/types/index";
+import type { PropertiesCSS, ValidPropertyCSS } from "../../../shared/types/index.d.ts";
 
 // additional functions ===================================== //
 function getFromAndToValueProp(valid_props: PropertiesCSS<ValidPropertyCSS>) {

@@ -1,7 +1,7 @@
 // import =================================================== //
 // types ---------------------------------------------------- //
-import type { TimingFunction } from "./types/index";
-import type { NamesTimingFunction } from "./constants/timingFunctions/types/index";
+import type { TimingFunction } from "./types/index.d.ts";
+import type { NamesTimingFunction } from "./constants/timingFunctions/types/index.d.ts";
 // constants ------------------------------------------------ //
 import { TIMING_FUNCTIONS } from "./constants/timingFunctions/index";
 // helpers -------------------------------------------------- //

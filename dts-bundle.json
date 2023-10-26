@@ -1,0 +1,7 @@
+{
+    "name": "moveton",
+    "main": "typesModule/**/*.d.ts",
+    "out": "../build/index.min.d.ts",
+    "outputAsModuleFolder": true,
+    "emitOnIncludedFileNotFound": true
+}

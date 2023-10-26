@@ -1,7 +1,7 @@
 // main ===================================================== //
 // types ---------------------------------------------------- //
-import type { PropertiesCSS } from "../../shared/types/index";
-import type { AnimaitonSettings } from "./types/index";
+import type { PropertiesCSS } from "../../shared/types/index.d.ts";
+import type { AnimaitonSettings } from "./types/index.d.ts";
 // helpers -------------------------------------------------- //
 import { getId } from "./helpers/getId";
 import { replace } from "./helpers/replace";

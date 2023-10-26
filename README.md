@@ -14,7 +14,6 @@
 * [Как запустить анимацию?](#как-запустить-анимацию)
 * [Как остановить анимацию самостоятельно в любой момент?](#как-остановить-анимацию-самостоятельно-в-любой-момент)
 * [Как получить измененные (в процессе проигрывания анимации) элементы?](#как-получить-измененные-в-процессе-проигрывания-анимации-элементы)
-* [Что вы можете сделать, чтобы помочь библиотеке?](#что-вы-можете-сделать-чтобы-помочь-библиотеке)
 
 ## Как установить библиотеку?
 Данная библиотека опубликована в [NPM](https://ru.wikipedia.org/wiki/Npm). [Ссылка на npm-пакет библиотеки](https://www.npmjs.com/package/moveton). Поэтому, чтобы установить библиотеку вам нужно воспользоваться следующей командой в консоли:
@@ -128,12 +127,6 @@ animation
   .catch((error) => console.log(error));   // в определённых случаях можно получить ошибку - анимация не запустилась
 ```
 
-## Что вы можете сделать, чтобы помочь библиотеке?
-Данной библиотеке не хватает следующего:
-*) В AnimationJS очень сильно не хватает [разнообразных встроенных анимаций, а именно 30 анимаций Роберта Пеннера](https://github.com/danro/jquery-easing/blob/master/jquery.easing.js);
-*) Сбощик проекта для сборки и минимизации библиотеки;
-*) Тестирование в разных версиях браузера (я пока её не проводил).
-
 
 
 # Moveton (en)
@@ -147,7 +140,6 @@ animation
 * [How to start an animation?](#how-to-start-an-animation)
 * [How can I stop the animation myself at any time?](#how-can-i-stop-the-animation-myself-at-any-time)
 * [How do I get the elements changed (during animation playback)?](#how-do-i-get-the-elements-changed-during-animation-playback)
-* [What can you do to help the library?](#what-can-you-do-to-help-the-library)
 
 ## How do I install the library?
 This library is published in [NPM](https://en.wikipedia.org/wiki/Npm). [Link to the library's npm package](https://www.npmjs.com/package/moveton). Therefore, to install the library, you need to use the following command in the console:
@@ -262,9 +254,3 @@ animation
   .then((elems) => console.log(elems))     // upon completion, we can access the passed html elements
   .catch((error) => console.log(error));   // in certain cases, you may get an error - the animation did not start
 ```
-
-## What can you do to help the library?
-This library lacks the following:
-*) AnimationJS is very much lacking [a variety of built-in animations, and there are 30 animations by Robert Penner](https://github.com/danro/jquery-easing/blob/master/jquery.easing.js);
-*) Project builder to build and minimize the library;
-*) Testing in different browser versions (I haven't done it yet).

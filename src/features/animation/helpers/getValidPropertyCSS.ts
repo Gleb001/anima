@@ -1,5 +1,5 @@
 // imports ================================================== //
-import type { ValidPropertyCSS } from "../../../shared/types/index";
+import type { ValidPropertyCSS } from "../../../shared/types/index.d.ts";
 
 // types ==================================================== //
 type getValidPropertyCSS = (property: string) => ValidPropertyCSS

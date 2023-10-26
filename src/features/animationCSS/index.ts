@@ -1,6 +1,6 @@
 // imports ================================================== //
 // types ---------------------------------------------------- //
-import type { PropertiesCSS } from "../../shared/types/index";
+import type { PropertiesCSS } from "../../shared/types/index.d.ts";
 // helpers -------------------------------------------------- //
 import { timeout } from "../../shared/helpers/timeout";
 import { createFileAnimationCSS } from "./helpers/createFileAnimationCSS";
