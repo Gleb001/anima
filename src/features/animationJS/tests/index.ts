@@ -25,7 +25,7 @@ describe("testing class animationJS", () => {
 
     test("start animation JS", async () => {
 
-        await animation.start("bounce_end", 1000).then((elems) => {
+        await animation.start("bounceEnd", 1000).then((elems) => {
             for (let elem of elems) {
                 expect(elem.style.animation).toBe("");
                 expect(elem.style.width).toBe("1999px");
