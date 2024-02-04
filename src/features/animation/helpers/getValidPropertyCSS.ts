@@ -7,20 +7,27 @@ type getValidPropertyCSS = (property: string) => ValidPropertyCSS
 // additional functions ===================================== //
 function getNumberCouples(property: string) {
 
-    let total_numbers = property.match(/(-?)\d{1,}/g);
+    let total_numbers = property.match(/(-?)(\d+\.\d+|\d+|\>)/g);
 
     if (
-        !total_numbers                  ||
-        total_numbers.length === 0      ||
-        total_numbers.length % 2 !== 0
+        !total_numbers              ||
+        total_numbers.length === 0
     ) return [];
 
     let result: (number[])[] = [];
-    for (let index = 0; index < total_numbers.length; index += 2) {
+    for (let index = 0; index < total_numbers.length; index += 3) {
+
+        const hasDivideArrow = (total_numbers[index + 1] === "->");
+        if (!hasDivideArrow) { index -= 2; continue; }
+
+        const hasEndNumber = (total_numbers[index + 2] !== undefined);
+        if (!hasEndNumber) return [];
+
         result.push([
             Number(total_numbers[index]),
-            Number(total_numbers[index + 1])
+            Number(total_numbers[index + 2])
         ]);
+
     }
     return result;
 
@@ -29,22 +36,22 @@ function getNumberCouples(property: string) {
 // main ===================================================== //
 export const getValidPropertyCSS: getValidPropertyCSS = (property) => {
 
-    let number_couples = getNumberCouples(property);
-    let pattern = property.replaceAll(/[\d|\-|\>|\s\+]{1,}/g, "?");
+    const number_couples = getNumberCouples(property);
+    const pattern_without_whitespaces = property.replaceAll(/\s+/g, "");
+    const pattern = pattern_without_whitespaces.replaceAll(/((-?)(\d+\.\d+|\d+)(->)((-?)(\d+\.\d+|\d+)))/g, "?");
 
-    let isWrongPropertyCSS = (
-        number_couples.length === 0 ||
-        pattern.length < 3
-    )
-    if (isWrongPropertyCSS) {
-        return {
-            number_couples: [],
-            pattern: ""
-        };
-    } else {
+    const hasNumberCouples = (number_couples.length !== 0);
+    const isValidPattern = (/(\(|\,|^)\?/g.test(pattern));
+
+    if (hasNumberCouples && isValidPattern) {
         return {
             number_couples,
             pattern
+        };
+    } else {
+        return {
+            number_couples: [],
+            pattern: ""
         };
     }
 

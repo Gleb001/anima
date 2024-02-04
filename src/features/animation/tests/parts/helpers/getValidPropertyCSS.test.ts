@@ -4,7 +4,7 @@ import { getValidPropertyCSS } from "../../../helpers/getValidPropertyCSS";
 // main ===================================================== //
 describe("Testing the getValidPropertyCSS helper", () => {
 
-    test("successfully obtaining a valid property", () => {
+    test("valid property", () => {
 
         let width_prop = "0 -> 1000 px";
         let neg_width_prop = "0 -> -1000 px";
@@ -36,7 +36,34 @@ describe("Testing the getValidPropertyCSS helper", () => {
 
     });
 
-    test("unsuccessful obtaining of a valid property", () => {
+    test("float numbers", () => {
+
+        let width_prop = "100 -> 523.9 px";
+        let valid_width_prop = getValidPropertyCSS(width_prop);
+        let expect_valid_width_prop = { number_couples: [[100, 523.9]], pattern: "?px" };
+        expect(valid_width_prop).toEqual(expect_valid_width_prop);
+
+    });
+
+    test("without measurement", () => {
+
+        let opacity_prop = "0 -> 200";
+        let valid_opacity_prop = getValidPropertyCSS(opacity_prop);
+        let expect_valid_opacity_prop = { number_couples: [[0, 200]], pattern: "?" };
+        expect(valid_opacity_prop).toEqual(expect_valid_opacity_prop);
+
+    });
+
+    test("static number couples", () => {
+
+        let matrix_prop = "translate(180 deg, 10 -> 20 %)";
+        let valid_matrix_prop = getValidPropertyCSS(matrix_prop);
+        let expect_valid_matrix_prop = { number_couples: [[10, 20]], pattern: "translate(180deg,?%)" };
+        expect(valid_matrix_prop).toEqual(expect_valid_matrix_prop);
+
+    });
+
+    test("invalid property", () => {
 
         let wrong_props = [
             "rotate( -> 100 px)",
@@ -45,7 +72,6 @@ describe("Testing the getValidPropertyCSS helper", () => {
             "px",
             "??px",
             "0 -> px",
-            "0->0",
             "weriwriesdfsdfsdfsdfdsfd(0 -> 100 deg, 0 -> %)",
         ];
 
